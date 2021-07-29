@@ -1,0 +1,17 @@
+- hosts: tomcat_worker
+  become: yes
+  become_user: root
+  tasks:
+    - name: Install Apache2 Tomcat
+      yum:
+        name: httpd
+        state: present
+      notify:
+       - start httpd
+
+  handlers:     
+    - name: start httpd
+      systemd:
+          name: httpd
+          state: started
+          enabled: true
